@@ -5,7 +5,10 @@ function replaceForRegex
     echo "$1" | sed 's/[\&/]/\\&/g'
 }
 
+#some...
 my_dir="$(dirname "$0")"
+year=`date +'%Y'`
+
 
 #input foo
 if [[ $# -ne 2 ]]; then
