@@ -23,11 +23,15 @@ rm -rf "$outputFolder/*"
 
 #preperations for menu
 menuDefFolder=/tmp/menudef/
-mkdir -p /tmp/menudef/
-rm -rf /tmp/menudef/* 
+mkdir -p "$menuDefFolder"
+rm -rf "$menuDefFolder/*"
 #yeah the menudef can be overwritten to i.e. add additional menu entries
 
 source $sourceFolder/site 
+
+#menu definiton copy stuff
+echo "Copying menu files from $menuFolder"
+cp -a "$sourceFolder/$menuFolder/." "$menuDefFolder/"
 
 mdFolder="$sourceFolder/$markdownFolder/*.*"
 echo "Searching for markdown-bash files in $mdFolder"
@@ -46,7 +50,7 @@ menuDefFolder="$menuDefFolder/*.*"
 for f in $menuDefFolder; do
     echo "Processing $f..."
     menu+="<li>"
-    menu+=$( sed 's/\(.*\):\(.*\)/<a href="\2">\1<\/a>/g' $f)
+    menu+=$( sed 's/\([^:]*\):\(.*\)/<a href="\2">\1<\/a>/g' $f)
     menu+="</li>"
 done
 menu+="</ul>"
