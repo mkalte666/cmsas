@@ -1,4 +1,4 @@
 function varReplace
 {
-    while read -r line; do eval "echo \"$line\""; done <<< "$1"
+    while read -r line; do eval "echo -e \"$line\""; done <<< "$1"
 }

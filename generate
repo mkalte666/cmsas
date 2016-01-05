@@ -24,7 +24,7 @@ rm -rf "$outputFolder/*"
 #preperations for menu
 menuDefFolder=/tmp/menudef/
 mkdir -p /tmp/menudef/
-
+rm -rf /tmp/menudef/ 
 #yeah the menudef can be overwritten to i.e. add additional menu entries
 
 source $sourceFolder/site 
@@ -35,7 +35,7 @@ echo "Searching for markdown-bash files in $mdFolder"
 for f in $mdFolder; do
     baseF=$(basename "$f")
     echo "Processing $baseF..."
-    content=$(./scripts/parser.bash "$f" "$menuDefFolder")
+    content=$("$my_dir/scripts/parser.bash" "$f" "$menuDefFolder")
     awk -v C="$content" '{sub(/\$content/, C); print}' "$sourceFolder/$template" > "$outputFolder/${baseF%.*}.html"
 done
 
