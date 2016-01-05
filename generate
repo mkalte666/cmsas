@@ -18,10 +18,13 @@ outputFolder=$2
 
 #makse sure output folder exists 
 mkdir -p "$outputFolder"
+#be an agressive asshole nugget
+rm -rf "$outputFolder/*"
 
 #preperations for menu
 menuDefFolder=/tmp/menudef/
 mkdir -p /tmp/menudef/
+
 #yeah the menudef can be overwritten to i.e. add additional menu entries
 
 source $sourceFolder/site 
