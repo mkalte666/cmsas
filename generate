@@ -16,10 +16,9 @@ fi
 sourceFolder=$1
 outputFolder=$2
 
-#makse sure output folder exists 
+#makse sure output folder exists and is empty 
+rm -rf "$outputFolder" #really asshat shit
 mkdir -p "$outputFolder"
-#be an agressive asshole nugget
-rm -rf "$outputFolder/*"
 
 #preperations for menu
 menuDefFolder=/tmp/menudef/
@@ -78,7 +77,7 @@ done
 
 #copy static stuff
 echo "Copying static folder"
-cp -a $sourceFolder/$staticFoder $outputFolder
+cp -a $sourceFolder/$staticFolder $outputFolder
 
 #fix the permissions
 if [ $fileReown = true ] ; then
