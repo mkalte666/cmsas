@@ -33,14 +33,15 @@ for f in $mdFolder; do
     baseF=$(basename "$f")
     echo "Processing $baseF..."
     content=$(./scripts/parser.bash "$f" "$menuDefFolder")
-    echo $content
     awk -v C="$content" '{sub(/\$content/, C); print}' "$sourceFolder/$template" > "$outputFolder/${baseF%.*}.html"
 done
 
 #generate the menu html list thingy 
+echo "Generating Menu..."
 menu="<ul>"
 menuDefFolder="$menuDefFolder/*.*"
 for f in $menuDefFolder; do
+    echo "Processing $f..."
     menu+="<li>"
     menu+=$( sed 's/\(.*\):\(.*\)/<a href="\2">\1<\/a>/g' $f)
     menu+="</li>"
@@ -48,17 +49,39 @@ done
 menu+="</ul>"
 source "$my_dir/scripts/varreplace.inc"
 
+#parse the news 
+news=""
+if [ $hasNews = true ]; then
+    echo "Parsing news..."
+    newsFiles="$sourceFolder/$newsFolder/*.*"
+    for f in $newsFiles; do
+        news+=$newsPrefix
+        news+=$(markdown "$f")
+        news+=$newsSuffix 
+    done
+fi
+
 #final replace
+echo "Finalizing html..."
 outputWildcard="$outputFolder/*.*"
 for f in $outputWildcard; do
     d=$(cat $f)
     varReplace "$d" > "$f"
 done
 
+#copy static stuff
+echo "Copying static folder"
+cp -a $sourceFolder/$staticFoder $outputFolder
+
+#fix the permissions
 if [ $fileReown = true ] ; then
+    echo "Modify file permissions..."
     sudocmd=""
     if [[ $EUID -ne 0 ]]; then
         sudocmd="sudo"
+        echo "will need root for this!"
     fi
     $sudocmd find "$outputFolder" -exec chown "$fileOwner" {} \; -exec chmod "$filePermissions" {} \; 
 fi
+
+echo "Done!"

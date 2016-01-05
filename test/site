@@ -6,7 +6,8 @@ title="Test site"
 #news stuff
 hasNews=true
 newsLimit=5
-
+newsPrefix=
+newsSuffix=
 template="template.html"
 
 #folders

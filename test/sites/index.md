@@ -8,3 +8,6 @@ Yeah, our programmer is working hard right now to write a cms that dosnt such th
 ## Contact?
 Currently were still derping around: #exploders @irc.mibbit.net !
 ## Dont forget ${alan}
+
+#news
+\$news
