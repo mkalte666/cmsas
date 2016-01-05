@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function imd {
+    echo "you will need markdown. will try to install it."
+    sudo apt-get install markdown
+}
+
+command -v markdown >/dev/null 2>&1 || imd
+
+echo "Done!" 

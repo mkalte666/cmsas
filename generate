@@ -1,0 +1,50 @@
+#!/bin/bash
+
+my_dir="$(dirname "$0")"
+
+#input foo
+if [[ $# -ne 2 ]]; then
+    echo "Invalid number of arguments. Syntax: generate <site source> <ouput folder>"
+    exit 1
+fi
+
+sourceFolder=$1
+outputFolder=$2
+
+#makse sure output folder exists 
+mkdir -p "$outputFolder"
+
+#preperations for menu
+menuDefFolder=/tmp/menudef/
+mkdir -p /tmp/menudef/
+#yeah the menudef can be overwritten to i.e. add additional menu entries
+
+source $sourceFolder/site 
+
+mdFolder="$sourceFolder/$markdownFolder/*.*"
+echo "Searching for markdown-bash files in $mdFolder"
+
+for f in $mdFolder; do
+    baseF=$(basename "$f")
+    echo "Processing $baseF..."
+    content=$(./scripts/parser.bash "$f" "$menuDefFolder")
+    sed 's/--CONTENT--/$content/g' "$sourceFolder/$template" > "$outputFolder/${baseF%.*}.html"
+done
+
+#generate the menu html list thingy 
+menu="<ul>"
+menuDefFolder="$menuDefFolder/*.*"
+for f in $menuDefFolder; do
+    menu+="<li>"
+    menu+=$( sed 's/\(.*\):\(.*\)/<a href="\2">\1<\/a>/g' $f)
+    menu+="</li>"
+done
+
+source "$my_dir/scripts/varreplace.inc"
+
+#final replace
+outputWildcard="$outputFolder/*.*"
+for f in $outputWildcard; do
+    d=$(cat $f)
+    varReplace "$d" > "$f"
+done

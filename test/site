@@ -1,0 +1,19 @@
+#the site definition is, in fact, a bash script. it should be made of key-value pairs, and every required one is shown in this file. 
+
+#general stuff
+title="Test site"
+
+#news stuff
+hasNews=true
+newsLimit=5
+
+template="template.html"
+
+#folders
+staticFolder="static/"
+newsFolder="news/"
+markdownFolder="sites/"
+
+#file modificators
+fileOwner="www-data:www-data"
+filePermissions="775"
