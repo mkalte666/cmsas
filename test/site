@@ -15,5 +15,6 @@ newsFolder="news/"
 markdownFolder="sites/"
 
 #file modificators
+fileReown=true
 fileOwner="www-data:www-data"
 filePermissions="775"

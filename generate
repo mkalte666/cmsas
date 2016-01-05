@@ -54,3 +54,11 @@ for f in $outputWildcard; do
     d=$(cat $f)
     varReplace "$d" > "$f"
 done
+
+if [ $fileReown = true ] ; then
+    sudocmd=""
+    if [[ $EUID -ne 0 ]]; then
+        sudocmd="sudo"
+    fi
+    $sudocmd find "$outputFolder" -exec chown "$fileOwner" {} \; -exec chmod "$filePermissions" {} \; 
+fi
