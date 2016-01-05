@@ -1,5 +1,10 @@
 #!/bin/bash
 
+function replaceForRegex
+{
+    echo "$1" | sed 's/[\&/]/\\&/g'
+}
+
 my_dir="$(dirname "$0")"
 
 #input foo
@@ -28,7 +33,8 @@ for f in $mdFolder; do
     baseF=$(basename "$f")
     echo "Processing $baseF..."
     content=$(./scripts/parser.bash "$f" "$menuDefFolder")
-    sed 's/--CONTENT--/$content/g' "$sourceFolder/$template" > "$outputFolder/${baseF%.*}.html"
+    echo $content
+    awk -v C="$content" '{sub(/\$content/, C); print}' "$sourceFolder/$template" > "$outputFolder/${baseF%.*}.html"
 done
 
 #generate the menu html list thingy 
@@ -39,7 +45,7 @@ for f in $menuDefFolder; do
     menu+=$( sed 's/\(.*\):\(.*\)/<a href="\2">\1<\/a>/g' $f)
     menu+="</li>"
 done
-
+menu+="</ul>"
 source "$my_dir/scripts/varreplace.inc"
 
 #final replace

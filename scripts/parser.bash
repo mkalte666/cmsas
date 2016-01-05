@@ -21,4 +21,4 @@ baseF=$(basename "$inFile")
 echo "$title:${baseF%.*}.html" > $menuDefDir/$menuPriority-$baseF.menudef
 
 #while read -r line; do eval "echo \"$line\""; done <<< "$md" | markdown
-varReplace "$md" | markdown
+varReplace "$md" | markdown 
