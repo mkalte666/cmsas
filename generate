@@ -80,7 +80,10 @@ done
 
 #copy static stuff
 echo "Copying static folder"
-cp -a $sourceFolder/$staticFolder $outputFolder
+cp -a "$sourceFolder/$staticFolder" "$outputFolder/"
+
+#check for robots.txt
+[ -a "$sourceFolder/robots.txt" ] && cp "$sourceFolder/robots.txt" "$outputFolder/" || echo "Coulnd not copy robots.txt. You might want to add it!"
 
 #fix the permissions
 if [ $fileReown = true ] ; then
