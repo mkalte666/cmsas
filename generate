@@ -56,6 +56,8 @@ for f in $menuDefFolder; do
     menu+="</li>"
 done
 menu+="</ul>"
+#substitute { and ; for sub menues 
+menu=$( echo -e "$menu" | sed -e 's/{/<ul><li>/g' -e 's/}/<\/li><\/ul>/g' -e 's/\;/<\/li><li>/g')
 source "$my_dir/scripts/varreplace.inc"
 
 #parse the news 
