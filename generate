@@ -25,8 +25,8 @@ mkdir -p "$outputFolder"
 
 #preperations for menu
 menuDefFolder=/tmp/menudef/
+rm -rf "$menuDefFolder/"
 mkdir -p "$menuDefFolder"
-rm -rf "$menuDefFolder/*"
 #yeah the menudef can be overwritten to i.e. add additional menu entries
 
 source $sourceFolder/site 
