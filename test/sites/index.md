@@ -1,5 +1,6 @@
 Title="bitle"
 alan="steve"
+menuPriority="000"
 
 # Good Morning Foks 
 We are testing around with the new CMS so stay tuned for more. Example would be the title: ${Steve}
