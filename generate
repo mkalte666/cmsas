@@ -73,12 +73,12 @@ if [ $hasNews = true ]; then
         if [ "$newsOrder" == "desc" ]; then
             news=$news$newsTmp
             if [ $newsLimit -gt 0 ]; then
-                newsLimited=$news$newsTmp
+                newsLimited=$newsLimited$newsTmp
             fi
         fi
         news=$newsTmp$news
         if [ $newsLimit -gt 0 ]; then
-            newsLimited=$newsTmp$news
+            newsLimited=$newsTmp$newsLimited
         fi
         newsLimit=$(($newsLimit-1))
     done
