@@ -62,13 +62,25 @@ source "$my_dir/scripts/varreplace.inc"
 
 #parse the news 
 news=""
+newsLimited=""
 if [ $hasNews = true ]; then
     echo "Parsing news..."
     newsFiles="$sourceFolder/$newsFolder/*.*"
     for f in $newsFiles; do
-        news+=$newsPrefix
-        news+=$(markdown "$f")
-        news+=$newsSuffix 
+        newsTmp=$newsPrefix
+        newsTmp+=$(markdown "$f")
+        newsTmp+=$newsSuffix
+        if [ "$newsOrder" == "desc" ]; then
+            news=$news$newsTmp
+            if [ $newsLimit -gt 0 ]; then
+                newsLimited=$news$newsTmp
+            fi
+        fi
+        news=$newsTmp$news
+        if [ $newsLimit -gt 0 ]; then
+            newsLimited=$newsTmp$news
+        fi
+        newsLimit=$(($newsLimit-1))
     done
 fi
 

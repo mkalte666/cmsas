@@ -8,6 +8,9 @@ hasNews=true
 newsLimit=5
 newsPrefix=
 newsSuffix=
+newsOrder="asc"
+
+#site template
 template="template.html"
 
 #folders
