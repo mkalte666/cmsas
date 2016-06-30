@@ -22,26 +22,26 @@ baseF=$(basename "$inFile")
 baseF=${baseF%.*}
 
 menuFilename="$menuDefDir/$menuPriority-$baseF.mdef"
-
-if [ "$parentNode" != "" ]; then
-    if [ -e "$menuDefDir/$parentNode.mdef" ]; then
-        menuFilename="$menuDefDir/$parentNode.mdef"
-        #todo: append
-        tmp=$( grep "{" "$menuFilename" >/dev/null && sed -e 's/}/\;/g' "$menuFilename" || echo -e "$(cat "$menuFilename")\n{\n"
-        )
-        echo -e "$tmp\n$title:${baseF}.html\n}" > "$menuFilename"
-    else 
-        echo -e "\n{\n$title:${baseF}.html\n}" > "$menuFilename"
-    fi 
-else
-    if [ -e "$menuFilename" ]; then
-        tmp=$(cat "$menuFilename")
-        echo -e "$title:${baseF}.html\n$tmp" > "$menuFileName"
-    else 
-        echo "$title:${baseF}.html" > "$menuFilename"
-    fi 
+if [ "$createMenuEntry" = true ]; then
+    if [ "$parentNode" != "" ]; then
+        if [ -e "$menuDefDir/$parentNode.mdef" ]; then
+            menuFilename="$menuDefDir/$parentNode.mdef"
+            #todo: append
+            tmp=$( grep "{" "$menuFilename" >/dev/null && sed -e 's/}/\;/g' "$menuFilename" || echo -e "$(cat "$menuFilename")\n{\n"
+            )
+            echo -e "$tmp\n$title:${baseF}.html\n}" > "$menuFilename"
+        else 
+            echo -e "\n{\n$title:${baseF}.html\n}" > "$menuFilename"
+        fi 
+    else
+        if [ -e "$menuFilename" ]; then
+            tmp=$(cat "$menuFilename")
+            echo -e "$title:${baseF}.html\n$tmp" > "$menuFileName"
+        else 
+            echo "$title:${baseF}.html" > "$menuFilename"
+        fi 
+    fi
 fi
-
 
 #echo "$title:${baseF%.*}.html" > $menuDefDir/$menuPriority-$baseF.mdef
 
